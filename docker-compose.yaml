@@ -1,0 +1,19 @@
+version: "3.10"
+
+services:
+  app:
+    build: ./app
+    environment:
+      - RUNTIME_PATH=\jit\runtime
+    volumes:
+      - D:\jit\runtime:/app/custom_runtime
+      - 
+    ports:
+      - 5000:80
+  
+  web:
+    build: ./web
+    environment:
+      - STAND=PROD
+    ports:
+      - 80:80

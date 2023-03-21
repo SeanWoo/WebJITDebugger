@@ -5,22 +5,16 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <UserSecretsId>8ad52399-5682-4f38-a946-5fe8718b20ed</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
-      <None Include="Resources\LaunchSite.csproj">
+      <None Include="LaunchSite\LaunchSite.csproj">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-	  <None Update="Resources\DisasmoLoader4.dll">
-		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
     </ItemGroup>
-
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 

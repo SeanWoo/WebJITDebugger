@@ -1,32 +1,31 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using WebJITDebugger.Dtos;
+using WebJITDebugger.Services;
 
 namespace WebJITDebugger.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class DisassemblerController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    private readonly ILogger<DisassemblerController> _logger;
+    private readonly DisassemblerService _disassemblerService;
 
-    private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public DisassemblerController(ILogger<DisassemblerController> logger, DisassemblerService disassemblerService)
     {
         _logger = logger;
+        _disassemblerService = disassemblerService;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    [HttpPost]
+    public async Task<ActionResult<CodeResponse>> Disassembly(CodeRequest request)
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+        var response = await _disassemblerService.DisassemblyCode(request.Code);
+        
+        return Ok(new CodeResponse()
+        {
+            AssemblyCode = response
+        });
     }
 }
