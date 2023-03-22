@@ -12,10 +12,10 @@ COPY . /web
 RUN yarn build
 
 # production environment
-FROM nginx:1.17.4-alpine
+FROM nginx:1.23 AS runtime
 COPY --from=build /web/build /web
 COPY nginx.conf /etc/nginx/nginx.conf
-#COPY nginx.conf /etc/nginx/conf.d/default.conf
+#COPY nginx.conf /etc/nginx/nginx.conf.tpl
 COPY entrypoint.sh /entrypoint.sh
 EXPOSE 80
 CMD ["sh", "/entrypoint.sh"]

@@ -9,6 +9,7 @@ namespace WebJITDebugger.Services;
 public class DisassemblerService
 {
     private const string DEFAULT_CORERUN_PATH = @"/app/runtime/artifacts/bin/coreclr/Linux.x64.Checked/corerun";
+    private const string DEFAULT_CORE_LIBRARES = @"/usr/share/dotnet/shared/Microsoft.NETCore.App/7.0.4";
     private const string DEFAULT_RESOURCES_PATH = @"/app/Resources";
 
     private readonly ProcessService _processService;
@@ -40,7 +41,7 @@ public class DisassemblerService
 
     private async Task WriteCodeToFiles(string code)
     {
-        string filePath = Path.Combine(DEFAULT_RESOURCES_PATH, "/Program.cs");
+        string filePath = Path.Combine(DEFAULT_RESOURCES_PATH, "Program.cs");
         await File.WriteAllTextAsync(filePath, code);
     }
 
@@ -60,9 +61,9 @@ public class DisassemblerService
     private async Task<string> DisassemblyMethod()
     {
         var envVars = new Dictionary<string, string>();
+        envVars["CORE_LIBRARIES"] = DEFAULT_CORE_LIBRARES;
         envVars["DOTNET_JitDisasm"] = "*Program:Main";
         envVars["DOTNET_TieredPG"] = "0";
-        envVars["CORE_LIBRARIES"] = @"D:\jit\runtime\artifacts\bin\runtime\net7.0-windows-Release-x64";
         envVars["DOTNET_TieredCompilation"] = "0";
         envVars["DOTNET_JitDiffableDasm"] = "0";
         envVars["DOTNET_ReadyToRun"] = "1";

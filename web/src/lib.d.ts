@@ -1,5 +1,5 @@
 declare module 'prismjs/components/prism-core' {
-    const highlight: (args: any[]) => any;
-    const languages: Map<string, any>;
+    const highlight: (code: string, style: any) => any;
+    const languages: Record<string, any>;
     export { highlight, languages };
   }

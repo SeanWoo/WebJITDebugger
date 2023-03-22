@@ -4,10 +4,11 @@ services:
   app:
     build: ./app
     environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Production
       - RUNTIME_PATH=\jit\runtime
     volumes:
       - D:\jit\runtime:/app/custom_runtime
-      - 
     ports:
       - 5000:80
   
@@ -17,3 +18,5 @@ services:
       - STAND=PROD
     ports:
       - 80:80
+    depends_on:
+      - app
